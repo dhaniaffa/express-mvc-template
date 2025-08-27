@@ -1,7 +1,11 @@
 {
-  "name": "express-mvc-pattern-play",
+  "name": "express-mvc-pattern",
+  "description": "A Template for Express.js projects using TypeScript, ES module syntax, MVC pattern, services, and DTOs. Includes ESLint and Prettier for code quality.",
+  "repository": "https://github.com/dhaniaffa/express-mvc-template",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "license": "MIT",
+  "author": "Dhaniaffa Adhimastama Mahadika",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
