@@ -1,6 +1,5 @@
 import * as userController from '../controllers/user.controller';
-
-import { resource } from './resource';
+import { resource } from '../utils/routing';
 
 const { router } = resource('/', {
   index: userController.getUsers,
