@@ -13,6 +13,11 @@ A scalable Express.js project using TypeScript, MVC pattern, DTOs, services, and
 - Environment separation: `.env.development`, `.env.production`, `.env.example`
 - ESLint, Prettier, EditorConfig
 
+## Prerequisites
+
+1. Node.js (version 18 or higher)
+2. npm (version 8.6.0 or higher)
+
 ## Getting Started
 
 1. **Install dependencies**
