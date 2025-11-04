@@ -1,7 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 
-export const asyncWrapper =
-  (fn: (req: Request, res: Response, next: NextFunction) => Promise<unknown>) =>
-  (req: Request, res: Response, next: NextFunction) => {
+type AsyncHandler = (req: Request, res: Response, next: NextFunction) => Promise<void> | void;
+
+export const asyncWrapper = (fn: AsyncHandler): RequestHandler => {
+  return (req: Request, res: Response, next: NextFunction) => {
     Promise.resolve(fn(req, res, next)).catch(next);
   };
+};
