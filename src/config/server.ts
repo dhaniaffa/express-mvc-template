@@ -1,8 +1,8 @@
-import dotenv from 'dotenv';
+import './env';
 
-const env = process.env.NODE_ENV || 'development';
-const envFile =
-  env === 'production' ? '.env.production' : env === 'development' ? '.env.development' : '.env';
-dotenv.config({ path: envFile });
-
+/**
+ * Server configuration (loaded from environment variables)
+ *
+ * Default: 3000
+ */
 export const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;

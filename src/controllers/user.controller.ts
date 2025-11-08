@@ -1,37 +1,26 @@
 import { Request, Response } from 'express';
-import { z } from 'zod';
 
 import * as userService from '../services/user.service';
-import { UserDto } from '../dtos/user.dto';
+import { CreateUserDto, CreateUserSchema, UserDto } from '../dtos/user.dto';
 import { asyncWrapper } from '../middleware/asyncWrapper';
 import { HttpError } from '../utils/httpError';
-import { formatZodError } from '../utils/zodErrorFormatter';
-
-// Zod schema for user creation
-const userCreateSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
-});
+import { ResourceResponse } from '../types/response';
 
 /**
  * Create a new user
  *
  * @route POST /api/users
  */
-export const createUser = asyncWrapper((req: Request, res: Response) => {
-  const result = userCreateSchema.safeParse(req.body);
-  if (!result.success) {
-    res
-      .status(400)
-      .json({ status: 400, error: formatZodError(result.error), message: 'Validation error' });
-    return;
-  }
+export const createUser = asyncWrapper(async (req: Request, res: Response): Promise<Response> => {
+  const createUserDto: CreateUserDto = await CreateUserSchema.parseAsync(req.body);
   // Simulate user creation (dummy)
-  const newUser: UserDto = {
-    id: Math.floor(Math.random() * 10000),
-    name: result.data.name,
+  const user = userService.createUser(createUserDto);
+  const response: ResourceResponse<UserDto> = {
+    status: 201,
+    data: user,
+    message: 'User created successfully',
   };
-  res.status(201).json(newUser);
+  return res.status(201).json(response);
 });
 
 /**
@@ -41,7 +30,12 @@ export const createUser = asyncWrapper((req: Request, res: Response) => {
  */
 export const getUsers = asyncWrapper((req: Request, res: Response) => {
   const users: UserDto[] = userService.getAllUsers();
-  res.json(users);
+  const response: ResourceResponse<UserDto[]> = {
+    status: 200,
+    data: users,
+    message: 'Users fetched successfully',
+  };
+  res.json(response);
 });
 
 /**

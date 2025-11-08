@@ -1,0 +1,4 @@
+*.log
+*.log.*
+*-audit.json
+!.gitignore

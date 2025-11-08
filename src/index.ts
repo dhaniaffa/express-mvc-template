@@ -9,6 +9,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'Welcome to the API',
+    version: '1.0.0',
+    action: 'get',
+  });
+});
+
 app.use('/api', routes);
 
 // 404 handler for unmatched routes
